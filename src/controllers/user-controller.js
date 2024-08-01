@@ -25,4 +25,24 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { create };
+const get = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await userService.getUser(id);
+    return res.status(200).json({
+      data: user,
+      success: true,
+      message: "Successfully fetch a user",
+      error: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Error while fetching a user",
+      error: error,
+    });
+  }
+};
+
+module.exports = { create, get };

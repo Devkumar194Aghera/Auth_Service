@@ -12,6 +12,18 @@ class UserRepository {
     }
   }
 
+  async getUser(userId) {
+    try {
+      const user = await User.findByPk(userId, {
+        attributes: ["id", "email"],
+      });
+      return user;
+    } catch (error) {
+      console.log("Error in the repository layer :" + error);
+      throw error;
+    }
+  }
+
   async destroyUser(userId) {
     try {
       const user = await User.destroy({ where: { id: userId } });
