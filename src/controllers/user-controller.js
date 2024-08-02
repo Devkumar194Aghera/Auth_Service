@@ -1,5 +1,4 @@
 const { UserService } = require("../services/index");
-
 const userService = new UserService();
 
 const create = async (req, res) => {
@@ -45,4 +44,24 @@ const get = async (req, res) => {
   }
 };
 
-module.exports = { create, get };
+const signIn = async (req, res) => {
+  try {
+    const data = req.body;
+    const token = await userService.signin(data.email, data.password);
+    return res.status(200).json({
+      data: token,
+      success: true,
+      message: "Successfully sigin",
+      error: {},
+    });
+  } catch (error) {
+    return res.status(401).json({
+      data: {},
+      success: false,
+      message: "Error while siging in",
+      error: error,
+    });
+  }
+};
+
+module.exports = { create, get, signIn };

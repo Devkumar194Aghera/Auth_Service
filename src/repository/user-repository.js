@@ -1,4 +1,3 @@
-const { where } = require("sequelize");
 const { User } = require("../models/index");
 
 class UserRepository {
@@ -12,11 +11,24 @@ class UserRepository {
     }
   }
 
-  async getUser(userId) {
+  async getUserById(userId) {
     try {
       const user = await User.findByPk(userId, {
         attributes: ["id", "email"],
       });
+      return user;
+    } catch (error) {
+      console.log("Error in the repository layer :" + error);
+      throw error;
+    }
+  }
+
+  async getUserByEmail(Email) {
+    try {
+      const user = await User.findOne({
+        where: { email: Email },
+      });
+      if (!user) throw "No user with this email address is present";
       return user;
     } catch (error) {
       console.log("Error in the repository layer :" + error);
