@@ -36,10 +36,10 @@ class UserService {
     }
   }
 
-  verifyToken(token, user) {
+  verifyToken(token) {
     try {
       var decoded = jwt.verify(token, JWT_KEY);
-      return decoded.email == user.email && decoded.id == user.id;
+      return decoded;
     } catch (error) {
       console.log("Error while verifing the token : " + error);
       throw error;
@@ -74,6 +74,21 @@ class UserService {
       return result;
     } catch (error) {
       console.log("Error while checking password");
+      throw error;
+    }
+  }
+
+  async isAuthenticated(token) {
+    try {
+      const response = this.verifyToken(token);
+      if (!response) throw { error: "Invalid token" };
+
+      const user = await this.userRepository.getUserById(response.id);
+      if (!user) {
+        throw { error: "No user with given token exist" };
+      }
+    } catch (error) {
+      console.log("Error in isAuthenticated in service ");
       throw error;
     }
   }
