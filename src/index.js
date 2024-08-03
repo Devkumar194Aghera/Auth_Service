@@ -4,25 +4,20 @@ const ApiRoutes = require("./routes/index");
 const bodyParser = require("body-parser");
 
 const { UserService } = require("./services/index");
-
+const { UserRepository } = require("./repository/index");
 function configureAndStartServer() {
   const app = express();
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(ApiRoutes);
 
-  app.listen(PORT, () => {
+  app.listen(PORT, async () => {
+    const userRepository = new UserRepository();
+
     console.log(`Server started on port : ${PORT}`);
-    // const userService = new UserService();
-    // const user = {
-    //   email: "devaghera194@gmail.com",
-    //   id: "1",
-    // };
-    // // const token = userService.createToken();
-    // const token =
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldmFnaGVyYTE5NEBnbWFpbC5jb20iLCJpZCI6IjEiLCJpYXQiOjE3MjI1MjIzMDksImV4cCI6MTcyMjUyNTkwOX0.pZK6JmzUfwaTA-t9chzCS2pxH1n3YSDrPZN-Zh-xMdw";
-    // const result = userService.verifyToken(token, user);
-    // console.log(result);
+    const role = await userRepository.getRoleById(2);
+    const user = await userRepository.getUserById(5);
+    user.addRole(role);
   });
 }
 configureAndStartServer();

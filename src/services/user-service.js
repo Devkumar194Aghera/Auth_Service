@@ -9,9 +9,22 @@ class UserService {
   async createUser(data) {
     try {
       const user = await this.userRepository.createUser(data);
+      addRole(user);
       return user;
     } catch (error) {
       console.log("Error in the service layer : " + error);
+      throw error;
+    }
+  }
+
+  async addRole(user)
+  {
+    try {
+      const role = await this.userRepository.getRoleById(1);
+      user.addRole(role);
+      return user;
+    } catch (error) {
+      console.log("Error in addRole in the service layer : " + error);
       throw error;
     }
   }
