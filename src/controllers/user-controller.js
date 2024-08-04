@@ -55,12 +55,12 @@ const signIn = async (req, res) => {
       error: {},
     });
   } catch (error) {
-    return res.status(401).json({
-      data: {},
-      success: false,
-      message: "Error while siging in",
-      error: error,
-    });
+      return res.status(error.statusCode).json({
+        data: {},
+        success: false,
+        message: error.message,
+        error: error.explanation,
+      });
   }
 };
 

@@ -3,6 +3,7 @@ const { UserRepository } = require("../repository/index");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AppErrors = require("../utils/error-codes");
+const ClientError = require("../utils/client-error");
 class UserService {
   constructor() {
     this.userRepository = new UserRepository();
@@ -81,6 +82,8 @@ class UserService {
 
       return newJWT;
     } catch (error) {
+      if (error.name == "AttributeNotFound") throw error;
+
       console.log("Error while siging in");
       throw error;
     }
