@@ -1,4 +1,4 @@
-const ValidationError = require("../utils/validate-error");
+const ValidateError = require("../utils/validate-error");
 const { User, Role } = require("../models/index");
 
 class UserRepository {
@@ -11,7 +11,7 @@ class UserRepository {
       return user;
     } catch (error) {
       if (error.name == "SequelizeValidationError") {
-        const validateError = new ValidationError(error);
+        throw new ValidateError(error);
       }
       console.log("Error in the repository layer :" + error);
       throw error;

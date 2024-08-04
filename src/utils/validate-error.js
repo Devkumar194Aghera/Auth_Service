@@ -1,4 +1,3 @@
-const { ValidationError } = require("sequelize");
 const AppErrors = require("./error-codes");
 const { StatusCodes } = require("http-status-codes");
 class ValidateError extends AppErrors {
@@ -18,4 +17,4 @@ class ValidateError extends AppErrors {
   }
 }
 
-module.exports = ValidationError;
+module.exports = ValidateError;
