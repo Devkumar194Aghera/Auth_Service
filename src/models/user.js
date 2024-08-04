@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
     }
   );
-  User.beforeCreate(async (user) => {
+  User.beforeCreate((user) => {
     // console.log(user);
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(user.password, salt);

@@ -15,9 +15,6 @@ function configureAndStartServer() {
     const userRepository = new UserRepository();
 
     console.log(`Server started on port : ${PORT}`);
-    const role = await userRepository.getRoleById(2);
-    const user = await userRepository.getUserById(5);
-    user.addRole(role);
   });
 }
 configureAndStartServer();

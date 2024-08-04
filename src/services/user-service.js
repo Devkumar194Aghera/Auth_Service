@@ -9,7 +9,7 @@ class UserService {
   async createUser(data) {
     try {
       const user = await this.userRepository.createUser(data);
-      addRole(user);
+      // addRole(user);
       return user;
     } catch (error) {
       console.log("Error in the service layer : " + error);
@@ -17,8 +17,7 @@ class UserService {
     }
   }
 
-  async addRole(user)
-  {
+  async addRole(user) {
     try {
       const role = await this.userRepository.getRoleById(1);
       user.addRole(role);
@@ -102,6 +101,16 @@ class UserService {
       }
     } catch (error) {
       console.log("Error in isAuthenticated in service ");
+      throw error;
+    }
+  }
+
+  async isAdmin(userId) {
+    try {
+      const response = this.userRepository.isAdmin(userId);
+      return response;
+    } catch (error) {
+      console.log("Something went wrong in service layer");
       throw error;
     }
   }
