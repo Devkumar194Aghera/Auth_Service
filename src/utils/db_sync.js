@@ -1,5 +1,4 @@
-const { sequelize } = require("./models");
-const db = require("./models/index");
+const db = require("../models/index");
 
 function db_SYNC() {
   if (process.env.DB_SYNC) {
